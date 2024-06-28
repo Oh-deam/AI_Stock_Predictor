@@ -1,4 +1,8 @@
 from datetime import datetime, timedelta
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+from create_db import IBMStock1
+from creds import db_path
 import json
 
 
@@ -23,3 +27,38 @@ def time_period() -> list:
             next_year += 1
         first_dt = first_dt.replace(year=next_year, month=next_month)
     return dates
+
+
+def create_dbsession(db_path=None):
+    engine = create_engine(db_path)
+
+    SessionClass = sessionmaker(bind=engine)
+    return SessionClass()
+
+
+def add_db(file_name):
+    with open(file, "r") as file:
+        data = json.load(file)
+
+    records = []
+
+
+# # Чтение данных из файла JSON
+# with open("IBM_data.json", "r") as file:
+#     data = json.load(file)
+
+# # Преобразование данных в объекты SQLAlchemy
+# records = []
+# for datetime_str, values in data.items():
+#     record = IBMStock(
+#         datetime=datetime_str,
+#         open=values.get("open"),
+#         high=values.get("high"),
+#         low=values.get("low"),
+#         close=values.get("close"),
+#         volume=values.get("volume")
+#     )
+#     records.append(record)
+
+# # Добавление данных в сессию и фиксация
+# session.bulk_save_objects(records)
