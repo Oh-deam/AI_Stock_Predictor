@@ -1,30 +1,55 @@
-from creds import API_KEY
 from datetime import datetime, timedelta
 from funs import time_period
+from creds import API_KEY
 import requests
 import json
+import os
 
 
-print(time_period())
+url = "https://www.alphavantage.co/query?"
 
 
-# for i in range(13):
+symbols = ["IBM", "GOOGL", "TSCDY"] GOOGL
+interval = "5min"
+outputsize = "full"
+
+streack = time_period()
+
+# for symbol in symbols:
+#     for month in streack:
+#         function = f"function=TIME_SERIES_INTRADAY&symbol={symbol}&interval={interval}&month={month}&outputsize=full&apikey={API_KEY}"
+#         response = requests.get(url + function)
+#         data = response.json()
+#         with open(f"{symbol}_data.json", "a") as f:
+#             json.dump(data, f, ensure_ascii=True, indent=4)
 
 
-# def get_data(function:str):
-#     url = "https://www.alphavantage.co/query?"
+for symbol in symbols:
+    file_name = f"{symbol}_data.json"
 
-#     # function = f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey={API_KEY}"
+    # Чтение существующих данных из файла, если файл не пустой
+    existing_data = {}
+    try:
+        with open(file_name, "r") as f:
+            file_content = f.read().strip()
+            if file_content:
+                existing_data = json.loads(file_content)
+    except (FileNotFoundError, json.JSONDecodeError):
+        existing_data = {}
 
-#     r = requests.get(url + function)
+    for month in streack:
+        # Формирование параметров запроса
+        function = f"function=TIME_SERIES_INTRADAY&symbol={symbol}&interval={interval}&month={month}&outputsize={outputsize}&apikey={API_KEY}"
+        response = requests.get(url + function)
+        new_data = response.json()
 
-#     data = r.json()
+        if "Time Series (5min)" in new_data:
+            if "Time Series (5min)" not in existing_data:
+                existing_data["Time Series (5min)"] = {}
+            existing_data["Time Series (5min)"].update(new_data["Time Series (5min)"])
 
+    # Запись обновленных данных в файл
+    with open(file_name, "w") as f:
+        json.dump(existing_data, f, ensure_ascii=False, indent=4)
 
-#     with open("data.json", "w") as file:
-#         json.dump(data, file, ensure_ascii=True, indent=4)
-
-
-# def time_period(start:str, finish:str) -> list :
-#     # применить функцию для парсинга по списку дат (get_data)
-# print(start)
+print("Data fetching completed.")
