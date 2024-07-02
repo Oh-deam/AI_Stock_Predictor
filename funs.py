@@ -55,7 +55,7 @@ def add_record(date, row: list, symbol: str):
         elif symbol == "MSFT":
             new_row = MSFTStock1()
 
-        new_row.datetime = datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
+        new_row.date = datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
         new_row.open = row[0]
         new_row.high = row[1]
         new_row.low = row[2]
