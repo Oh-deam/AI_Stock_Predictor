@@ -1,7 +1,7 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
-from create_db import IBMStock1
+from create_db import IBMStock1, GOOGLStock1, MSFTStock1
 from creds import db_path
 import json
 
@@ -43,22 +43,26 @@ def add_db(file_name):
     records = []
 
 
-# # Чтение данных из файла JSON
-# with open("IBM_data.json", "r") as file:
-#     data = json.load(file)
+def add_record(date, row: list, symbol: str):
+    try:
+        engine = create_engine(db_path)
+        SessionClass = sessionmaker(bind=engine)
+        db_session = SessionClass()
+        if symbol == "IBM" or symbol == "ibm":
+            new_row = IBMStock1()
+        elif symbol == "GOOGL":
+            new_row = GOOGLStock1()
+        elif symbol == "MSFT":
+            new_row = MSFTStock1()
 
-# # Преобразование данных в объекты SQLAlchemy
-# records = []
-# for datetime_str, values in data.items():
-#     record = IBMStock(
-#         datetime=datetime_str,
-#         open=values.get("open"),
-#         high=values.get("high"),
-#         low=values.get("low"),
-#         close=values.get("close"),
-#         volume=values.get("volume")
-#     )
-#     records.append(record)
+        new_row.datetime = datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
+        new_row.open = row[0]
+        new_row.high = row[1]
+        new_row.low = row[2]
+        new_row.close = row[3]
+        new_row.volume = row[4]
+        db_session.add(new_row)
+        db_session.commit()
 
-# # Добавление данных в сессию и фиксация
-# session.bulk_save_objects(records)
+    except Exception as e:
+        print(f"Error with add row {symbol} : {e}")
