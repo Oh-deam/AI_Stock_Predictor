@@ -10,7 +10,7 @@ DeclBase = declarative_base()
 
 class IBMStock1(DeclBase):
     __tablename__ = "IBM_stock"
-    datetime = Column(TIMESTAMP, primary_key=True)
+    date = Column(TIMESTAMP, primary_key=True)
     open = Column(Float)
     high = Column(Float)
     low = Column(Float)
@@ -20,7 +20,7 @@ class IBMStock1(DeclBase):
 
 class GOOGLStock1(DeclBase):
     __tablename__ = "GOOGL_stock"
-    datetime = Column(TIMESTAMP, primary_key=True)
+    date = Column(TIMESTAMP, primary_key=True)
     open = Column(Float)
     high = Column(Float)
     low = Column(Float)
@@ -30,7 +30,7 @@ class GOOGLStock1(DeclBase):
 
 class MSFTStock1(DeclBase):
     __tablename__ = "MSFT_stock"
-    datetime = Column(TIMESTAMP, primary_key=True)
+    date = Column(TIMESTAMP, primary_key=True)
     open = Column(Float)
     high = Column(Float)
     low = Column(Float)
