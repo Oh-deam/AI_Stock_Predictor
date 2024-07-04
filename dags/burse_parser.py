@@ -1,4 +1,4 @@
-from funs import time_period, add_record
+from dags.funs import time_period, add_record
 from creds import API_KEY
 import requests
 
@@ -12,14 +12,6 @@ interval = "5min"
 outputsize = "full"
 
 streack = time_period()
-
-# for symbol in symbols:
-#     for month in streack:
-#         function = f"function=TIME_SERIES_INTRADAY&symbol={symbol}&interval={interval}&month={month}&outputsize=full&apikey={API_KEY}"
-#         response = requests.get(url + function)
-#         data = response.json()
-#         with open(f"{symbol}_data.json", "a") as f:
-#             json.dump(data, f, ensure_ascii=True, indent=4)
 
 
 for i in range(len(symbols)):
