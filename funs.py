@@ -66,3 +66,38 @@ def add_record(date, row: list, symbol: str):
 
     except Exception as e:
         print(f"Error with add row {symbol} : {e}")
+
+    def create_cursor():
+        conn = create_engine(db_path).connect()
+        return conn
+
+    def delete_from_table(name_table):
+        try:
+            last_row = list(
+                create_engine(DB_URL).connect().execute(f"DELETE FROM {name_table}")
+            )
+            return "succes delete"
+        except:
+            return "Error"
+
+    def add_row_predict(row: list, symbol: str):
+        try:
+            db_session = create_session()
+            if symbol == "ibm":
+                new_row = ibm_predict()
+
+            elif symbol == "microsoft":
+                new_row = microsoft_predict()
+
+            elif symbol == "apple":
+                new_row = apple_predict()
+
+            new_row.date = row[0]
+            new_row.open = row[1]
+            new_row.high = row[2]
+            new_row.low = row[3]
+            new_row.close = row[4]
+            db_session.add(new_row)
+            db_session.commit()
+        except Exception as e:
+            print(f"Error with add row {symbol} : {e}")
