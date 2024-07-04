@@ -9,7 +9,7 @@ DeclBase = declarative_base()
 
 
 class IBMStock1(DeclBase):
-    __tablename__ = "IBM_stock"
+    __tablename__ = "ibm_stock"
     date = Column(TIMESTAMP, primary_key=True)
     open = Column(Float)
     high = Column(Float)
@@ -19,7 +19,7 @@ class IBMStock1(DeclBase):
 
 
 class GOOGLStock1(DeclBase):
-    __tablename__ = "GOOGL_stock"
+    __tablename__ = "googl_stock"
     date = Column(TIMESTAMP, primary_key=True)
     open = Column(Float)
     high = Column(Float)
@@ -29,7 +29,37 @@ class GOOGLStock1(DeclBase):
 
 
 class MSFTStock1(DeclBase):
-    __tablename__ = "MSFT_stock"
+    __tablename__ = "msft_stock"
+    date = Column(TIMESTAMP, primary_key=True)
+    open = Column(Float)
+    high = Column(Float)
+    low = Column(Float)
+    close = Column(Float)
+    volume = Integer
+
+
+class IBMStock2(DeclBase):
+    __tablename__ = "ibm_stock_predict"
+    date = Column(TIMESTAMP, primary_key=True)
+    open = Column(Float)
+    high = Column(Float)
+    low = Column(Float)
+    close = Column(Float)
+    volume = Integer
+
+
+class GOOGLStock2(DeclBase):
+    __tablename__ = "googl_stock_predict"
+    date = Column(TIMESTAMP, primary_key=True)
+    open = Column(Float)
+    high = Column(Float)
+    low = Column(Float)
+    close = Column(Float)
+    volume = Integer
+
+
+class MSFTStock2(DeclBase):
+    __tablename__ = "msft_stock_predict"
     date = Column(TIMESTAMP, primary_key=True)
     open = Column(Float)
     high = Column(Float)

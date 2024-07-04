@@ -8,7 +8,7 @@ from airflow.operators.bash import BashOperator
 from fun_for_predict import get_predict_data
 from models_sql import apple_predict
 from db_utils import delete_from_table, add_row_predict
-from funs import create_dbsession, delete_from_table
+from dags.funs import create_dbsession, delete_from_table
 
 from config import db_names
 
